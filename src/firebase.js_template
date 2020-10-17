@@ -1,0 +1,31 @@
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBFSIZXxSGrEqJ0bC_wBNyNqE4jUCcmzVg",
+    authDomain: "jobskillmatch.firebaseapp.com",
+    databaseURL: "https://jobskillmatch.firebaseio.com",
+    projectId: "jobskillmatch",
+    storageBucket: "jobskillmatch.appspot.com",
+    messagingSenderId: "574279328467",
+    appId: "1:574279328467:web:198399aa46cd9595ffaa26"
+};
+
+firebase.initializeApp(firebaseConfig)
+
+// utils
+const db = firebase.firestore()
+const auth = firebase.auth()
+
+// collection references
+const usersCollection = db.collection('users')
+const jobsCollection = db.collection('jobs')
+
+// export utils/refs
+export {
+    db,
+    auth,
+    usersCollection,
+    jobsCollection
+}
