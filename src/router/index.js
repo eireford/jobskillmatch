@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import JobsList from "@/views/JobsList";
 import { auth } from '../firebase'
 
 Vue.use(VueRouter)
@@ -8,8 +7,8 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'JobsList',
-        component: JobsList,
+        name: 'JobsDashboard',
+        component: () => import( /* webpackChunkName: "jobs-dashboard" */ '../views/JobsDashboard.vue'),
         meta: {
             requiresAuth: true
         }

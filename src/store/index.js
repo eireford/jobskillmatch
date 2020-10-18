@@ -21,20 +21,19 @@ const store = new Vuex.Store({
     state: {
         userProfile: {},
         jobs: [],
-        posts: []
+        skills: []
+    },
+    getters: {
     },
     mutations: {
         setUserProfile(state, val) {
             state.userProfile = val
         },
-        setPerformingRequest(state, val) {
-            state.performingRequest = val
-        },
-        setPosts(state, val) {
-            state.posts = val
-        },
         setJobs(state, val) {
             state.jobs = val
+        },
+        setSkills(state, val) {
+            state.skills = val
         }
     },
     actions: {
@@ -80,46 +79,21 @@ const store = new Vuex.Store({
             // redirect to login view
             await router.push('/login')
         },
-        // eslint-disable-next-line no-unused-vars
-        async createJob({state, commit}, job) {
-            // create job in firebase
+
+        async addJob(commit,job) {
+            console.log('job',job);
+            console.log(fb.auth.currentUser.uid);
             await fb.jobsCollection.add({
                 createdOn: new Date(),
                 postingId: job.postingId,
                 title: job.title,
                 userId: fb.auth.currentUser.uid,
-                userName: state.userProfile.name,
-                comments: 0,
-                likes: 0
-            })
-        },
-        // eslint-disable-next-line no-unused-vars
-        async likeJob({commit}, job) {
-            const userId = fb.auth.currentUser.uid
-            const docId = `${userId}_${job.id}`
-
-            // check if user has liked job
-            const doc = await fb.jobLikesCollection.doc(docId).get()
-            if (doc.exists) {
-                return
-            }
-
-            // create job
-            await fb.jobLikesCollection.doc(docId).set({
-                jobID: job.id,
-                userId: userId
-            })
-
-            // update job likes count
-            await fb.jobsCollection.doc(job.id).update({
-                likes: job.likesCount + 1
             })
         },
         async updateProfile({dispatch}, user) {
             const userId = fb.auth.currentUser.uid
             // update user object
-            // eslint-disable-next-line no-unused-vars
-            const userRef = await fb.usersCollection.doc(userId).update({
+            await fb.usersCollection.doc(userId).update({
                 name: user.name,
                 title: user.title
             })
@@ -136,6 +110,7 @@ const store = new Vuex.Store({
             })
         }
     }
+
 })
 
 export default store

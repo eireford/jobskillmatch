@@ -2,7 +2,7 @@
   <div id="login">
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
     <section>
-      <div class="col1">
+      <div>
         <h1>Job Skill Match</h1>
         <p>Find jobs that match your skills.</p>
       </div>

@@ -1,7 +1,6 @@
 <template>
   <header>
     <section>
-      <div class="col1">
         <router-link to="/">
           <h3>Job Skill Match</h3>
         </router-link>
@@ -14,7 +13,6 @@
           </li>
           <li><a @click="logout()">logout</a></li>
         </ul>
-      </div>
     </section>
   </header>
 </template>
