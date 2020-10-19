@@ -3,35 +3,39 @@
     <div class="create-job">
       <p>create a job</p>
       <form @submit.prevent>
-        <input v-model="newJobForm.postingId" placeholder="job posting id"/>
-        <input v-model="newJobForm.title" placeholder="job title"/>
-        <button @click="createJobAndClearForm()" :disabled="newJobForm.postingId === ''
-          || newJobForm.title === ''" class="button">job</button>
+        <input v-model="newJob.postingId" placeholder="job posting id"/>
+        <input v-model="newJob.title" placeholder="job title"/>
+        <button @click="createJob()" :disabled="newJob.postingId === ''
+          || this.newJob.title === ''" class="button">job</button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      newJobForm: {
+      newJob: {
         postingId: '',
         title: ''
       }
     }
   },
   methods: {
-    createJobAndClearForm() {
-      console.log('postingId',this.newJobForm.postingId)
-      this.$store.dispatch('addJob', {
-        postingId: this.newJobForm.postingId,
-        title: this.newJobForm.title
+    createJob() {
+      console.log({
+        postingId: this.newJob.postingId,
+        title: this.newJob.title
       })
-      console.log('postingId',this.newJobForm.postingId)
+      console.log("Creating New Job",this.newJob)
+      this.$store.dispatch("createJob",{
+        postingId: this.newJob.postingId,
+        title: this.newJob.title
+      }
+        )
     }
   }
-
 };
 </script>

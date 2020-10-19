@@ -1,46 +1,57 @@
 <template>
   <div class="jobsDashboard">
-    <div><jobs-list/></div>
-    <div><job-form/></div>
+    <div v-if="errorFromServer">
+      <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+          outline>
+        Data loading failed. You can try one more time:
+        <v-btn small
+               outline
+               color="info"
+               @click="refetchData()">
+          Try
+        </v-btn>
+      </v-alert>
+    </div>
+    <div v-else>
+      <SkillsTable v-if="loaded" :skills="skills"/>
+      <div class="text-xs-center" v-else>
+        <v-progress-circular
+            :size="100"
+            color="primary"
+            indeterminate
+        ></v-progress-circular>
+        <h2 color="primary">loading data...</h2>
+      </div>
+      <JobsTable/>
+      <JobForm/>
+      <SkillForm/>
+    </div>
   </div>
 </template>
 
 <script>
-import store from '@/store'
-import JobsList from "@/components/JobsList";
+import SkillsTable from "@/components/SkillsTable";
+import JobsTable from "@/components/JobsTable";
 import JobForm from "@/components/JobForm";
+import SkillForm from "@/components/SkillForm";
+import {mapState} from "vuex";
 
 export default {
+
   name: 'JobsDashboard',
   components: {
-    JobsList,
-    JobForm
+    SkillsTable,
+    JobsTable,
+    JobForm,
+    SkillForm
   },
+  data: () => ({}),
   computed: {
-    jobs() {
-      return store.state.jobs;
-    }
+    ...mapState(["loaded", "errorFromServer", "jobs", "skills"])
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-</style>
