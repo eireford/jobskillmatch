@@ -1,17 +1,16 @@
 <template>
   <ul class="jobsTable">
     <h3>Jobs Table</h3>
-    <Job v-for="job in jobs" :key="job.id" :job="job"/>
+    <ul>
+      <li v-for="job in jobs" :key="job.id" :job="job">{{job.postingId}} {{job.title}}</li>
+    </ul>
+
   </ul>
 </template>
 
 <script>
-import Job from "@/components/Job";
 
 export default {
-  components: {
-    Job
-  },
   computed: {
     jobs() {
       return this.$store.state.jobs
